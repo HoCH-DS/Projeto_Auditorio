@@ -18,14 +18,16 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
 
 	public Iterable<Reservation>findAllByStatus(StatusEvent status);
 	
+	//metodo para procurar resevar no  banco de dados por qualquer atributo
 	@Query("SELECT res FROM Reservation res WHERE res.titulo LIKE %:p% OR res.dataInicio LIKE %:p% "
 			+ "OR res.dataTermino LIKE %:p% OR usuario.nome LIKE %:p% OR status LIKE %:p%")
     public List<Reservation> procurarTudo(@Param("p") String param);
 	
+	//verifica se no banco de dados se a data da resevar está entre outra data reservada
 	@Query("SELECT res from Reservation res Where :r between res.dataInicio and res.dataTermino")
     public Reservation between(@Param("r")Calendar dataInicio);
 	
-	
+	//metodo que busca um usuário pelo id
 	public List<Reservation> findByUsuarioId(Long id);
 	
 	

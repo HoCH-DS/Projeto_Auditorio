@@ -16,6 +16,7 @@ import senai.sp.cotia.auditorio.type.Types;
 @RequestMapping("/api/types")
 public class TypesRestController {
     
+	//metodo para pegar os valores da enum
     @Publico
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
     public Types[] getTypes() {

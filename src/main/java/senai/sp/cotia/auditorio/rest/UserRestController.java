@@ -57,6 +57,7 @@ public class UserRestController {
 		@Autowired
 		private UserRepository repository;
 				
+			//cadasta reserva
 			@Publico
 			@RequestMapping(value="cadastrar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 			public Object criarUsuario(@RequestBody Usuario usuario) {
@@ -94,6 +95,7 @@ public class UserRestController {
 			 }
 		}
 		
+		//atualiza o usuario recebendo o id
 		@Privado
 		@RequestMapping(value="/{id}", method = RequestMethod.PUT)
 		public ResponseEntity<Void> atualizarUsuario(@RequestBody Usuario usuario, @PathVariable("id") Long id) {
@@ -126,7 +128,9 @@ public class UserRestController {
 			usuario = repository.findByNifAndSenha(usuario.getNif(), usuario.getSenha());
 			// verifica se existe o usuario
 			if(usuario != null) {
-				// usuario.setSenhaComHash(usuario.getSenha());
+				int contar = usuario.getContLogin();
+                usuario.setContLogin(contar+1);
+                repository.save(usuario);
 				Map<String, Object> payload = new HashMap<String, Object>();
 				payload.put("usuario_id", usuario.getId());
 				payload.put("usuario_nif", usuario.getNif());
@@ -146,18 +150,20 @@ public class UserRestController {
 			}
 		}
 		
+		//metodo que lista os usuários
 		@Publico
 		@RequestMapping(value = "lista", method = RequestMethod.GET)
 		public Iterable<Usuario> listaUsuario(){
 			return repository.findAll();
 		}
 		
+		//busca no banco de dados os usuarios do tipo comum
 		@Privado
 		@RequestMapping(value = "verifica", method = RequestMethod.GET)
 		public List<Usuario> listaComuns() {
 			return repository.findAllByCommuns() ;
 		}
-		
+		//busca no banco de dados os usuarios do tipo adm
 		@Privado
         @RequestMapping(value = "verificaAdmin", method = RequestMethod.GET)
         public List<Usuario> listaAdmins() {
@@ -185,6 +191,7 @@ public class UserRestController {
 		}		
 		
 		
+		//decoda o token para pegar o id do usuário que está logado na sessão
 		@Privado
 		@RequestMapping(value = "sendId", method = RequestMethod.GET)
 		public ResponseEntity<Long> decoda(HttpServletRequest request,
@@ -205,6 +212,7 @@ public class UserRestController {
 			return ResponseEntity.ok(idl);
 		}
 		
+		// chamando o método que buscar um usuário por qualquer coisa
 		@RequestMapping(value = "/findusuario/{p}")
 		public Iterable<Usuario> findByAll(@PathVariable("p") String param) {
 			return repository.procurarUsuario(param);

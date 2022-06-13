@@ -30,6 +30,7 @@ public class Usuario {
 	private String senha;
 	@Enumerated(EnumType.STRING)
 	private Types type;
+	private int contLogin;
 	
 	public void setSenha(String senha) {
     this.senha = HashUtil.hash256(senha);

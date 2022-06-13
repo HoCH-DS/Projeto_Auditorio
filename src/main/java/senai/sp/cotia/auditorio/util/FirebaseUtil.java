@@ -1,4 +1,4 @@
-package senai.sp.cotia.auditorio.util;
+/*package senai.sp.cotia.auditorio.util;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -77,3 +77,4 @@ public class FirebaseUtil {
 	}
 	
 }
+*/

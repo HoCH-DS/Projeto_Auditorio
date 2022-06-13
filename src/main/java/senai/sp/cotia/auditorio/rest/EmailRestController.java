@@ -25,7 +25,7 @@ public class EmailRestController {
     
 
  
-
+    //método que envia o email 
     @RequestMapping(value="sending-email", method = RequestMethod.POST)
     public ResponseEntity<EmailModel> sendingEmail(@RequestBody @Valid EmailModel emailModel) {
         emailService.sendEmail(emailModel);

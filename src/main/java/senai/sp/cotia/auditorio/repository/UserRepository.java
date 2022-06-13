@@ -17,13 +17,16 @@ import senai.sp.cotia.auditorio.type.Types;
 public interface UserRepository extends PagingAndSortingRepository<Usuario, Long>{
 	
 	public Usuario findByNifAndSenha(String email, String senha);
-
+	//busca no banco de dados os usuarios do tipo comum
 	@Query("SELECT u FROM Usuario u WHERE u.type = 'comum'")
 	public List<Usuario> findAllByCommuns();
 	
+	//busca no banco de dados os usuarios do tipo administrador
+
 	@Query("SELECT u FROM Usuario u WHERE u.type = 'administrador'")
     public List<Usuario> findAllByAdministrador();
 	
+	//procura um usuario no banco de dados por qualquer atributo
 	@Query("SELECT u FROM Usuario u WHERE u.nome LIKE %:p% OR u.nif LIKE %:p% "
 			+ "OR u.email LIKE %:p%")
     public List<Usuario> procurarUsuario(@Param("p") String param);
